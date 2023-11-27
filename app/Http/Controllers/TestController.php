@@ -1,0 +1,120 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Personal;
+use App\Models\Production;
+use App\Models\Machine;
+use Auth;
+
+class TestController extends Controller
+{
+    //
+    public function viewTest()
+    {
+        if(Auth::guest())
+        {
+            return redirect()->route('/');
+        }
+
+        $data = Personal::all();
+        $data1 = Machine::all();
+        //     >where('created_at' , '>=', '$fromdate ')
+        //     ->where('created_at', '<=', $todate)
+        //     ->where('username','like','%' .$name. '%')
+            //->get();
+        return view('form.form',compact('data','data1'));
+    }
+    // save
+    public function viewTestSave(Request $request)
+    {
+        echo "inside viewTestSave";
+        $request->validate([
+            'operator'=>'required',
+            'product'=>'required',
+            'machine'=>'required',
+            'timeRange'=>'required|numeric',
+            'itemProduced'=>'required|numeric',           
+            //'machine'   =>'required|email|unique:products',
+            //'machine'   =>'required|min:11|numeric',
+        ]);
+    
+        try{
+
+            $operator = $request->operator;
+            $product    = $request->product;
+            $machine    = $request->machine;
+            $timerange  = $request->timeRange;
+            $itemProduced = $request->itemProduced;
+            $createdBy = Auth::user()->id;
+echo "inside save";
+
+            $Production = new Production();
+            $Production->oid = $machine;
+            $Production->mid    = $operator;
+            $Production->pid    = $product;
+            $Production->time_range    = $timerange;
+            $Production->prd_count = $itemProduced;
+            $Production->prd_percent = $itemProduced;
+            $Production->created_by = $createdBy;
+            $Production->modified_by = $createdBy;
+           
+
+
+            echo $createdBy;
+
+            $Production->save();
+            return redirect()->back()->with('insert','Data has been insert successfully!.');
+
+        }catch(Exception $e){
+            echo $e;
+            return redirect()->back()->with('error','Data has been insert fail!.');
+        }
+    }
+    // update
+    public function update(Request $request)
+    {
+        $update =[
+
+            'id'      =>$request->id,
+            'username'=>$request->name,
+            'email'   =>$request->email,
+            'phone'   =>$request->phone,
+        ];
+        Personal::where('id',$request->id)->update($update);
+        return redirect()->back()->with('insert','Data has been updated successfully!.');
+    }
+
+    // delete
+    public function delete($id)
+    {
+        $delete = Personal::find($id);
+        $delete->delete();
+        return redirect()->back()->with('insert','Data has been deleted successfully!.');
+    }
+
+     // report
+     public function getAllMachine()
+     {
+         if(Auth::guest())
+         {
+             return redirect()->route('/');
+         }
+ 
+         $fromdate = $request->fromdate;
+         $todate   = $request->todate;
+         $name     = $request->name;
+ 
+ 
+         // $data = \DB::select("SELECT * FROM personals WHERE created_at BETWEEN '$fromdate 00:00:00'AND'$todate 23:59:59'");
+ 
+         $data = DB::table('machine')
+         //     >where('created_at' , '>=', '$fromdate ')
+         //     ->where('created_at', '<=', $todate)
+         //     ->where('username','like','%' .$name. '%')
+             ->get();
+         return view('form.form',compact('data'));
+     }
+    
+}

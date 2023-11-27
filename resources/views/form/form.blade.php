@@ -28,42 +28,57 @@
 			<div class="form-group row">
 				<label class="col-form-label col-4">Machine Name</label>
 				<div class="col-8">
-				<select class="form-control" name="machine">
-              		<option>Select Machine</option>
+				<select class="form-control @error('machine') is-invalid @enderror" name="machine">
+              		<option value="">Select Machine</option>
     					@foreach ($data1 as $value)
-             			<option value="{{ $value->id }}" >
-                		{{ $value->id }}
+             			<option value="{{ $value->id }}" {{ (old('machine') == $value->id ? "selected":"") }}>
+                		{{ $value->name }}
               			</option>
      					@endforeach
     			</select>
+				@error('machine')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
 				</div>      	
 			</div>
 
 			<div class="form-group row">
 				<label class="col-form-label col-4">Operator</label>
 				<div class="col-8">
-				<select class="form-control" name="operator">
-              		<option>Select Operator</option>
-    					@foreach ($data1 as $value)
-             			<option value="{{ $value->id }}" >
+				<select class="form-control @error('operator') is-invalid @enderror" name="operator">
+              		<option value="">Select Operator</option>
+    					@foreach ($data2 as $value)
+             			<option value="{{ $value->id }}" {{ (old('operator') == $value->id ? "selected":"") }}>
                 		{{ $value->name }}
               			</option>
      					@endforeach
     			</select>
+					@error('operator')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
 				</div>      	
 			</div>
 
 			<div class="form-group row">
 				<label class="col-form-label col-4">Product</label>
 				<div class="col-8">
-				<select class="form-control" name="product">
-              		<option>Select Product</option>
-    					@foreach ($data1 as $value)
-             			<option value="{{ $value->id }}" >
+				<select class="form-control @error('product') is-invalid @enderror" name="product">
+              		<option value="">Select Product</option>
+    					@foreach ($data3 as $value)
+             			<option value="{{ $value->id }}" {{ (old('product') == $value->id ? "selected":"") }} >
                 		{{ $value->name }}
               			</option>
      					@endforeach
     			</select>
+					@error('product')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
 				</div>      	
 			</div>
 
@@ -92,13 +107,12 @@
 			</div>
 
 			
-
 			
 
 
 			<div class="form-group row">
 				<div class="col-8 offset-4">
-					<button type="submit" class="btn btn-primary btn-lg">Save</button>
+					<button type="submit" class="btn btn-primary btn-lg">Save1</button>
 				</div>  
 			</div>		      
 		</form>

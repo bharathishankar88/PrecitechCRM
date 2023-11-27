@@ -7,6 +7,7 @@ use App\Models\Personal;
 use App\Models\Production;
 use App\Models\Machine;
 use Auth;
+use DB;
 
 class TestController extends Controller
 {
@@ -20,11 +21,13 @@ class TestController extends Controller
 
         $data = Personal::all();
         $data1 = Machine::all();
+        $data2 = DB::select("SELECT * FROM operators");
+        $data3 = DB::select("SELECT * FROM products");
         //     >where('created_at' , '>=', '$fromdate ')
         //     ->where('created_at', '<=', $todate)
         //     ->where('username','like','%' .$name. '%')
             //->get();
-        return view('form.form',compact('data','data1'));
+        return view('form.form',compact('data','data1','data2','data3'));
     }
     // save
     public function viewTestSave(Request $request)
@@ -48,11 +51,11 @@ class TestController extends Controller
             $timerange  = $request->timeRange;
             $itemProduced = $request->itemProduced;
             $createdBy = Auth::user()->id;
-echo "inside save";
+            echo "inside save";
 
             $Production = new Production();
-            $Production->oid = $machine;
-            $Production->mid    = $operator;
+            $Production->oid = $operator;
+            $Production->mid    = $machine;
             $Production->pid    = $product;
             $Production->time_range    = $timerange;
             $Production->prd_count = $itemProduced;

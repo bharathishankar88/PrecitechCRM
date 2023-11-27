@@ -23,7 +23,8 @@ Route::get('/',function(){
 })->name('/');
 
 // Home
-Route::get('home/page',[App\Http\Controllers\HomeController::class,'index'])->name('home/page');
+Route::get('home/page',[App\Http\Controllers\HomeController::class,'userChart'])->name('home/page');
+Route::get('home/save',[App\Http\Controllers\ChartController::class,'userChart1'])->name('home/save');
 
 // route test 
 Route::get('form/personal/new',[App\Http\Controllers\TestController::class,'viewTest'])->name('form/personal/new');
@@ -43,3 +44,4 @@ Route::get('form/login/view/new',[App\Http\Controllers\LoginController::class,'v
 Route::post('form/login',[App\Http\Controllers\LoginController::class,'login'])->name('form/login');
 Route::get('form/logout',[App\Http\Controllers\LoginController::class,'logout'])->name('form/logout');
 
+Route::get('/chart',[App\Http\Controllers\ChartController::class,'userChart']);

@@ -11,12 +11,32 @@
                 <li class="nav-item">
                     <a class="nav-link pl-0" href="{{ route('form/report') }}"><i class="fa fa-cog fa-fw"></i> <span class="d-none d-md-inline">Report</span></a>
                 </li>
+                @if(Auth::user()->role==1)
                 <li class="nav-item">
                     <a class="nav-link pl-0" href="#"><i class="fa fa-heart codeply fa-fw"></i> <span class="d-none d-md-inline">Maintenance</span></a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link pl-0" href="#"><i class="fa fa-star codeply fa-fw"></i> <span class="d-none d-md-inline">Promission</span></a>
                 </li>
+                <!--
+                <li class="nav-item dropdown">
+          <a id="navbarLevel1" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-star codeply fa-fw"></i> <span class="d-none d-md-inline">Settings</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarLevel1">
+            <li>
+              <a class="dropdown-item" href="#">Parent3 Chield1</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">Parent3 Chield2</a>
+            </li>
+            -->
+            
+          </ul>
+        </li>
+                <!---->
                 <li class="nav-item">
                     <a class="nav-link pl-0" href="{{ route('form/logout') }}"><i class="fa fa-sign-out"></i> <span class="d-none d-md-inline">Logout</span></a>
                 </li>

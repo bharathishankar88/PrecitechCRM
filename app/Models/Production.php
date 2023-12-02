@@ -18,5 +18,6 @@ class Production extends Model
         'prdpercent',        
         'createdby',
         'modifiedby',
+        'createdat',
     ];
 }

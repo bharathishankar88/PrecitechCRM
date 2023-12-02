@@ -32,26 +32,32 @@
 				<div class="row">
 					<div class="container-fluid">
 						<div class="form-group row">
-							<label for="date" class="col-form-label col-sm-2">From</label>
-							<div class="col-sm-3">
-								<input type="date" class="form-control input-sm" id="fromdate" name="fromdate" required>
+						<div class="col-sm-2">
+                            <input type="date" class="form-control input-sm" id="fromdate" name="fromdate" placeholder="from" required >
 							</div>
-						</div>
-						<div class="form-group row">
-						<label for="date" class="col-form-label col-sm-2">To:</label>
-							<div class="col-sm-3">
-							<input type="date" class="form-control input-sm" id="todate" name="todate" required>
+                            
+                            <div class="col-sm-2">
+                            <input type="date" class="form-control input-sm" id="todate" name="todate" required>
 							</div>
-						</div>
-
-						<div class="form-group row">
-							<label for="date" class="col-form-label col-sm-2">product</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control input-sm" id="name" name="name"placeholder="Search other..." />
+                            <!--<div class="col-sm-2">
+                            <label for="date" class="col-form-label col-sm-2">Machine</label>
+                            </div>-->
+                            <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="operator" name="operator" placeholder ="operator">
 							</div>
 							<div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="machine" name="machine" placeholder ="machine">
+							</div>
+                            <div class="col-sm-2">
 								<button type="submit" class="btn" name="search" title="Search"><img src="https://img.icons8.com/android/24/000000/search.png"/></button>
 							</div>
+							@if($data!=null)
+							<div class="col-sm-2">
+							<a class="nav-link pl-0" href="{{ url('form/export') }}"><i class="fa fa-file-excel-o codeply fa-fw"></i> <span class="d-none d-md-inline">Export</span></a>
+							</div>
+							@endif
+						</div>
+						
 						</div>
 					</div>
 				</div>
@@ -71,6 +77,7 @@
 						<th>Machine</th>
 						<th>Duration</th>						
 						<th>No.of.product</th>
+						<th>Percent</th>
 						<th>Modify</th>
 					</tr>
 				</thead>
@@ -83,10 +90,11 @@
 						<td class="machine">{{ $value->mid }}</td>
 						<td class="timerange">{{ $value->time_range }}</td>
 						<td class="prdcount">{{ $value->prd_count }}</td>
+						<td class="prdpercent">{{ $value->prd_percent }}</td>
 						<td class=" text-center">
-							<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
+							<!--<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
 								<i class="fa fa-edit" style="color: #2196f3"></i>
-							</a>
+							</a>-->
 							<a href="{{ url('form/delete'.$value->id) }}" onclick="return confirm('Are you sure to want to delete it?')">
 								<i class="fa fa-trash" style="color: red;"></i>
 							</a>
@@ -97,8 +105,8 @@
 			</table>
 		</div>
 	</div>
-	{{-- </table> --}}
-
+	{{-- </table> --}}	
+	
 	<!-- Modal Update-->
 	<div class="modal fade" id="update" tabindex="-1" aria-labelledby="update" aria-hidden="true">
 		<div class="modal-dialog">
@@ -115,21 +123,21 @@
 						<input type="hidden" class="form-control" id="e_id" name="id" value=""/>
 						<div class="modal-body">
 							<div class="form-group row">
-								<label for="" class="col-sm-3 col-form-label">Full Name</label>
+								<label for="" class="col-sm-3 col-form-label">Operator</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" id="e_name" name="name" required="" value=""/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="" class="col-sm-3 col-form-label">Email</label>
+								<label for="" class="col-sm-3 col-form-label">Duration</label>
 								<div class="col-sm-9">
-									<input type="email" class="form-control" id="e_email" name="email" required="" value=""/>
+									<input type="text" class="form-control" id="e_timerange" name="timerange" required="" value=""/>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="" class="col-sm-3 col-form-label">Phone</label>
+								<label for="" class="col-sm-3 col-form-label">Count</label>
 								<div class="col-sm-9">
-									<input type="tel" class="form-control" id="e_phone" name="phone" required="" value=""/>
+									<input type="text" class="form-control" id="e_prdcount" name="prdcount" required="" value=""/>
 								</div>
 							</div>
 						</div>

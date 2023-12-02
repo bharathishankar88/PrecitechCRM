@@ -14,17 +14,19 @@
 			    <div class="row">
 				    <div class="container-fluid">                    
                         <div class="form-group row">
-                            <div class="col-sm-2">
-                            <label for="date" class="col-form-label col-sm-2">From</label>
-                            </div>
+                          
 							<div class="col-sm-2">
-                            <input type="date" class="form-control input-sm" id="fromdate" name="fromdate" required>
+                            <input type="date" class="form-control input-sm" id="fromdate" name="fromdate" placeholder="from" required >
 							</div>
-                            <div class="col-sm-2">
-                            <label for="date" class="col-form-label col-sm-2">To</label>
-                            </div>
+                            
                             <div class="col-sm-2">
                             <input type="date" class="form-control input-sm" id="todate" name="todate" required>
+							</div>
+                            <!--<div class="col-sm-2">
+                            <label for="date" class="col-form-label col-sm-2">Machine</label>
+                            </div>-->
+                            <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="machine" name="machine" placeholder ="Machine">
 							</div>
                             <div class="col-sm-2">
 								<button type="submit" class="btn" name="search" title="Search"><img src="https://img.icons8.com/android/24/000000/search.png"/></button>

@@ -34,6 +34,7 @@ class TestController extends Controller
     {
         echo "inside viewTestSave";
         $request->validate([
+            'todate'=>'required',
             'operator'=>'required',
             'product'=>'required',
             'machine'=>'required',
@@ -44,7 +45,7 @@ class TestController extends Controller
         ]);
     
         try{
-
+            $todate = $request->todate;
             $operator = $request->operator;
             $product    = $request->product;
             $machine    = $request->machine;
@@ -53,15 +54,27 @@ class TestController extends Controller
             $createdBy = Auth::user()->id;
             echo "inside save";
 
+            $target = DB::select("SELECT targetperhr FROM products where id= '$product'");
+            $targetpermin = 0;
+            $productionpercent = 0.0;
+            if($target != null){
+                foreach($target as $value){
+                $targetpermin = $value->targetperhr/60;
+                $productionpercent= $itemProduced/($timerange*$targetpermin);
+                }
+
+            }
+
             $Production = new Production();
             $Production->oid = $operator;
             $Production->mid    = $machine;
             $Production->pid    = $product;
             $Production->time_range    = $timerange;
             $Production->prd_count = $itemProduced;
-            $Production->prd_percent = $itemProduced;
+            $Production->prd_percent = $productionpercent * 100;
             $Production->created_by = $createdBy;
             $Production->modified_by = $createdBy;
+            $Production->created_at = $todate;
            
 
 

@@ -34,6 +34,7 @@ Route::get('form/delete{id}',[App\Http\Controllers\TestController::class,'delete
 
 // report
 Route::get('form/report',[App\Http\Controllers\ReportController::class,'report'])->name('form/report');
+Route::get('form/export',[App\Http\Controllers\ReportController::class, 'exportData'])->name('form/export');
 
 // form test request
 Route::get('form/register',[App\Http\Controllers\LoginController::class,'index'])->name('form/register');
@@ -44,4 +45,5 @@ Route::get('form/login/view/new',[App\Http\Controllers\LoginController::class,'v
 Route::post('form/login',[App\Http\Controllers\LoginController::class,'login'])->name('form/login');
 Route::get('form/logout',[App\Http\Controllers\LoginController::class,'logout'])->name('form/logout');
 
-Route::get('/chart',[App\Http\Controllers\ChartController::class,'userChart']);
+
+

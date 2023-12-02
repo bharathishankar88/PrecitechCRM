@@ -24,7 +24,20 @@
 					{!! \Session::get('error') !!}
 				</div>
 			@endif
+			 
 
+			<div class="form-group row">
+			<label class="col-form-label col-4">Data Entry For</label>
+				<div class="col-8">
+				<input type="date" class="form-control input-sm" id="todate" name="todate" required>
+				@error('todate')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
+				</div>      	
+			</div>
+                           
 			<div class="form-group row">
 				<label class="col-form-label col-4">Machine Name</label>
 				<div class="col-8">
@@ -43,6 +56,8 @@
 					@enderror
 				</div>      	
 			</div>
+
+			
 
 			<div class="form-group row">
 				<label class="col-form-label col-4">Operator</label>
@@ -112,7 +127,7 @@
 
 			<div class="form-group row">
 				<div class="col-8 offset-4">
-					<button type="submit" class="btn btn-primary btn-lg">Save1</button>
+					<button type="submit" class="btn btn-primary btn-lg">Save</button>
 				</div>  
 			</div>		      
 		</form>

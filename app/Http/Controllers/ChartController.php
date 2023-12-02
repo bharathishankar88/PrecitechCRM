@@ -22,8 +22,11 @@ class ChartController extends Controller
 
         $fromdate = $request->fromdate;
         $todate   = $request->todate;
+        $machine   = $request->machine;
 
-        $users = DB::select("SELECT m.name ,sum(prd_percent) as prd_percent,MONTH(p.created_at) as created_at FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' group by created_at,m.name");
+        if($machine!=null)
+        $users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' and m.name like '%$machine%' group by m.name");
+        else $users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' group by m.name");
 
         $labels = [];
         $data = [];
@@ -31,7 +34,7 @@ class ChartController extends Controller
 
         foreach($users as $user){
             $count = $user->prd_percent;
-                    $machine=$user->name;
+            $machine=$user->name;
             array_push($labels,$machine);
         array_push($data,$count);
         }
@@ -57,7 +60,7 @@ class ChartController extends Controller
 
         $datasets = [
             [
-                'label' => 'No.of items produced on Nov 23',
+                'label' => 'percentage',
                 'data' => $data,
                 'backgroundColor' => $colors
             ]

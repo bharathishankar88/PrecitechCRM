@@ -27,7 +27,7 @@ class ReportController extends Controller
         $operator = $request->operator;
         $machine = $request->machine;
 
-        $query = "SELECT pr.id as id,o.name as oid,m.name as mid, pr.name as pid, time_range,prd_count,prd_percent,p.created_at as created_at FROM productions p, operators o, products pr,machines m where p.pid=pr.id and p.oid=o.id and p.mid=m.id  and  p.created_at BETWEEN '$fromdate 00:00:00' AND '$todate 23:59:59' ";
+        $query = "SELECT p.id as id,o.name as oid,m.name as mid, pr.name as pid, time_range,prd_count,prd_percent,p.created_at as created_at FROM productions p, operators o, products pr,machines m where p.pid=pr.id and p.oid=o.id and p.mid=m.id  and  p.created_at BETWEEN '$fromdate 00:00:00' AND '$todate 23:59:59' ";
         if($operator!=null)
         $query = $query. " and o.name like '%$operator%'";
         if($machine!=null)
@@ -101,7 +101,7 @@ class ReportController extends Controller
 
         // Set headers for download
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="example.xlsx"');
+        header('Content-Disposition: attachment;filename="precitech_production_details.xlsx"');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
     }

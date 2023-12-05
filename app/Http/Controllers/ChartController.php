@@ -30,7 +30,7 @@ class ChartController extends Controller
 
         $labels = [];
         $data = [];
-        $colors = ['#FF0000','#00FFFF','#0000FF','#808080','#FFA500'];
+        $colors = ['#FF0000','#00FFFF','#0000FF','#808080','#FFA500','#FFBF00','#FF7F50','#DE3163','#9FE2BF','#40E0D0','#CCCCFF'];
 
         foreach($users as $user){
             $count = $user->prd_percent;
@@ -66,6 +66,6 @@ class ChartController extends Controller
             ]
             ];
 
-            return view('home',compact('datasets','labels'));
+            return view('home',compact('datasets','labels','fromdate','todate'));
     }
 }

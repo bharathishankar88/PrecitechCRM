@@ -105,7 +105,7 @@ class TestController extends Controller
     // delete
     public function delete($id)
     {
-        $delete = Personal::find($id);
+        $delete = Production::find($id);
         $delete->delete();
         return redirect()->back()->with('insert','Data has been deleted successfully!.');
     }

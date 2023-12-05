@@ -22,6 +22,7 @@
                 {!! \Session::get('error') !!}
             </div>
         @endif
+		
 
 		{{-- search --}}
 
@@ -90,7 +91,7 @@
 						<td class="machine">{{ $value->mid }}</td>
 						<td class="timerange">{{ $value->time_range }}</td>
 						<td class="prdcount">{{ $value->prd_count }}</td>
-						<td class="prdpercent">{{ $value->prd_percent }}</td>
+						<td class="prdpercent">{{ round($value->prd_percent,2) }}%</td>
 						<td class=" text-center">
 							<!--<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
 								<i class="fa fa-edit" style="color: #2196f3"></i>
@@ -182,6 +183,7 @@
             $('#error').hide();
         },5000);
         
-    </script>        
+    </script>  
+	
 </main>
 @endsection

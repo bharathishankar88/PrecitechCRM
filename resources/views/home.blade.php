@@ -76,10 +76,12 @@
 <div class="container">
   <div class="row">
     <div class="col-sm">
-      
+    
     </div>
     <div class="col-sm">
     <canvas id="chart1"></canvas>
+    <br>
+    Displaying production percentage for the period from {{ date('d-m-Y', strtotime($fromdate))  }} to {{ date('d-m-Y', strtotime($todate))  }}
     </div>
     <div class="col-sm">
       

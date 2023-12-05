@@ -32,7 +32,7 @@ class HomeController extends Controller
         $users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' group by m.name");
         $labels = [];
         $data = [];
-        $colors = ['#FF0000','#00FFFF','#0000FF','#808080','#FFA500'];
+        $colors = ['#FF0000','#00FFFF','#0000FF','#808080','#FFA500','#FFBF00','#FF7F50','#DE3163','#9FE2BF','#40E0D0','#CCCCFF'];
 
         foreach($users as $user){
             $count = $user->prd_percent;
@@ -43,13 +43,13 @@ class HomeController extends Controller
 
         $datasets = [
             [
-                'label' => 'No.of items produced on Oct 23',
+                'label' => 'Percentage',
                 'data' => $data,
                 'backgroundColor' => $colors
             ]
             ];
 
 
-            return view('home',compact('datasets','labels'));
+            return view('home',compact('datasets','labels','fromdate','todate'));
     }
 }

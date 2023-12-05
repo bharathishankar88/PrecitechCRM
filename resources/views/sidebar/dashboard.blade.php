@@ -32,11 +32,11 @@
             <li>
               <a class="dropdown-item" href="#">Parent3 Chield2</a>
             </li>
-            -->
+            
             
           </ul>
-        </li>
-                <!---->
+        </li>-->
+                
                 <li class="nav-item">
                     <a class="nav-link pl-0" href="{{ route('form/logout') }}"><i class="fa fa-sign-out"></i> <span class="d-none d-md-inline">Logout</span></a>
                 </li>

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @include('navbar.header')
 @section('content')
-@include('sidebar.form')
+@include('sidebar.dashboard')
 <main class="col bg-faded py-3 flex-grow-1">
     <h3>Form / Persional / View</h3>
     <br>

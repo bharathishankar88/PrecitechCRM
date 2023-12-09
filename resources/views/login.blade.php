@@ -33,6 +33,6 @@
             <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
         </div>
     </form>
-    <div class="text-center">Already have an account? <a href="{{ route('form/register') }}">Sign up</a></div>
+    <!--<div class="text-center">Already have an account? <a href="{{ route('form/register') }}">Sign up</a></div>-->
 </div>
 @endsection

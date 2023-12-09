@@ -5,29 +5,26 @@
                 <li class="nav-item {{ Request::is('home/page') ? 'active' : '' }}">
                     <a class="nav-link pl-0 text-nowrap" href="{{ route('home/page') }}"><i class="fa fa-bullseye fa-fw"></i> <span class="font-weight-bold">Dashboard</span></a>
                 </li>
-                @if(Auth::user()->role!=3)
                 <li class="nav-item {{ Request::is('form/personal/new') ? 'active' : '' }}">
                     <a class="nav-link pl-0" href="{{ route('form/personal/new') }}"><i class="fa fa-book fa-fw"></i> <span class="d-none d-md-inline">Form</span></a>
                 </li>
-                @endif
                 <li class="nav-item {{ Request::is('form/report') ? 'active' : '' }}">
-                    <a class="nav-link pl-0" href="{{ route('form/report') }}"><i class="fa fa-file-excel-o fa-fw"></i> <span class="d-none d-md-inline">Report</span></a>
+                    <a class="nav-link pl-0" href="{{ route('form/report') }}"><i class="fa fa-cog fa-fw"></i> <span class="d-none d-md-inline">Report</span></a>
                 </li>
-                
-                <!--<li class="nav-item {{ Request::is('#') ? 'active' : '' }}">
+                @if(Auth::user()->role==1)
+                <li class="nav-item {{ Request::is('#') ? 'active' : '' }}">
                     <a class="nav-link pl-0" href="#"><i class="fa fa-heart codeply fa-fw"></i> <span class="d-none d-md-inline">Maintenance</span></a>
                 </li>
-                
+                @endif
                 <li class="nav-item {{ Request::is('#') ? 'active' : '' }}">
                     <a class="nav-link pl-0" href="#"><i class="fa fa-star codeply fa-fw"></i> <span class="d-none d-md-inline">Promission</span></a>
-                </li>-->
-                @if(Auth::user()->role==1)
+                </li>
                 <style>
                  .submenu {
                          display: none;
                         }
                 </style>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link pl-0" href="#" onclick="toggleSubmenu('submenu1')"><i class="fa fa-cog fa-fw"></i> <span class="d-none d-md-inline">Setting</span></a>
                     <ul class="submenu" id="submenu1">
                         <li class="nav-item {{ Request::is('form/addoperator') ? 'active' : '' }}">
@@ -43,8 +40,7 @@
                              <a class="nav-link pl-0" href="{{ route('form/adduser') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Add User</span></a>
                         </li>
                     </ul>
-                </li>
-                @endif 
+                </li>    
                 <li class="nav-item {{ Request::is('form/logout') ? 'active' : '' }}">
                     <a class="nav-link pl-0" href="{{ route('form/logout') }}"><i class="fa fa-sign-out"></i> <span class="d-none d-md-inline">Logout</span></a>
                 </li>

@@ -9,10 +9,10 @@ use App\Models\Machine;
 use Auth;
 use DB;
 
-class TestController extends Controller
+class RMController extends Controller
 {
     //
-    public function viewTest()
+    public function viewRM()
     {
         if(Auth::guest())
         {
@@ -23,14 +23,11 @@ class TestController extends Controller
         $data1 = Machine::all();
         $data2 = DB::select("SELECT * FROM operators");
         $data3 = DB::select("SELECT * FROM products");
-        //     >where('created_at' , '>=', '$fromdate ')
-        //     ->where('created_at', '<=', $todate)
-        //     ->where('username','like','%' .$name. '%')
-            //->get();
-        return view('form.form',compact('data','data1','data2','data3'));
+        
+        return view('rm.formin',compact('data','data1','data2','data3'));
     }
     // save
-    public function viewTestSave(Request $request)
+    public function viewSave(Request $request)
     {
         echo "inside viewTestSave";
         $request->validate([

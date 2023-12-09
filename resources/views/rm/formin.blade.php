@@ -39,17 +39,38 @@
 			</div>
                            
 			<div class="form-group row">
-				<label class="col-form-label col-4">Machine Name</label>
+				<label class="col-form-label col-4">Supplier</label>
 				<div class="col-8">
-				<select class="form-control @error('machine') is-invalid @enderror" name="machine">
-              		<option value="">Select Machine</option>
+				<select class="form-control @error('supplier') is-invalid @enderror" name="supplier">
+              		<option value="">Select Supplier</option>
     					@foreach ($data1 as $value)
-             			<option value="{{ $value->id }}" {{ (old('machine') == $value->id ? "selected":"") }}>
+             			<option value="{{ $value->id }}" {{ (old('supplier') == $value->id ? "selected":"") }}>
                 		{{ $value->name }}
               			</option>
      					@endforeach
     			</select>
-				@error('machine')
+				@error('supplier')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+				@enderror
+				</div>      	
+			</div>
+
+			
+
+			<div class="form-group row">
+				<label class="col-form-label col-4">Grade</label>
+				<div class="col-8">
+				<select class="form-control @error('grade') is-invalid @enderror" name="grade">
+              		<option value="">Select Grade</option>
+    					@foreach ($data2 as $value)
+             			<option value="{{ $value->id }}" {{ (old('grade') == $value->id ? "selected":"") }}>
+                		{{ $value->name }}
+              			</option>
+     					@endforeach
+    			</select>
+					@error('grade')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
 					</span>
@@ -58,50 +79,11 @@
 			</div>
 
 			
-
 			<div class="form-group row">
-				<label class="col-form-label col-4">Operator</label>
+				<label class="col-form-label col-4">Size</label>
 				<div class="col-8">
-				<select class="form-control @error('operator') is-invalid @enderror" name="operator">
-              		<option value="">Select Operator</option>
-    					@foreach ($data2 as $value)
-             			<option value="{{ $value->id }}" {{ (old('operator') == $value->id ? "selected":"") }}>
-                		{{ $value->name }}
-              			</option>
-     					@endforeach
-    			</select>
-					@error('operator')
-					<span class="invalid-feedback" role="alert">
-						<strong>{{ $message }}</strong>
-					</span>
-					@enderror
-				</div>      	
-			</div>
-
-			<div class="form-group row">
-				<label class="col-form-label col-4">Product</label>
-				<div class="col-8">
-				<select class="form-control @error('product') is-invalid @enderror" name="product">
-              		<option value="">Select Product</option>
-    					@foreach ($data3 as $value)
-             			<option value="{{ $value->id }}" {{ (old('product') == $value->id ? "selected":"") }} >
-                		{{ $value->name }}
-              			</option>
-     					@endforeach
-    			</select>
-					@error('product')
-					<span class="invalid-feedback" role="alert">
-						<strong>{{ $message }}</strong>
-					</span>
-					@enderror
-				</div>      	
-			</div>
-
-			<div class="form-group row">
-				<label class="col-form-label col-4">Time Range</label>
-				<div class="col-8">
-					<input type="text" class="form-control @error('timeRange') is-invalid @enderror" name="timeRange" value="{{ old('timeRange') }}" placeholder="Enter Time">
-					@error('timeRange')
+					<input type="text" class="form-control @error('size') is-invalid @enderror" name="size" value="{{ old('size') }}" placeholder="Enter Size">
+					@error('size')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
 					</span>
@@ -110,10 +92,10 @@
 			</div>
 			
 			<div class="form-group row">
-				<label class="col-form-label col-4">No. Items Produced</label>
+				<label class="col-form-label col-4">QTY(kgs)</label>
 				<div class="col-8">
-					<input type="tel" class="form-control @error('itemProduced') is-invalid @enderror" name="itemProduced" value="{{ old('itemProduced') }}" placeholder="Enter Items Produced">
-					@error('itemProduced')
+					<input type="text" class="form-control @error('qty') is-invalid @enderror" name="qty" value="{{ old('qty') }}" placeholder="Enter QTY">
+					@error('qty')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
 						</span>

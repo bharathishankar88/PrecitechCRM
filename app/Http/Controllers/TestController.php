@@ -91,14 +91,31 @@ class TestController extends Controller
     // update
     public function update(Request $request)
     {
+
+        $id = $request->id;
+        $prdid = $request->prdid;
+        $rejection = $request->rejection;
+        $timerange = $request->timerange;
+        $itemProduced = $request->itemproduced;
+
+        $target = DB::select("SELECT targetperhr FROM products where name= '$prdid'");
+            $targetpermin = 0;
+            $productionpercent = 0.0;
+            if($target != null){
+                foreach($target as $value){
+                $targetpermin = $value->targetperhr/60;
+                
+                }
+            }
+        $productionpercent= ($itemProduced-$rejection)/($timerange*$targetpermin);
         $update =[
 
-            'id'      =>$request->id,
-            'username'=>$request->name,
-            'email'   =>$request->email,
-            'phone'   =>$request->phone,
+            //'id'      =>$id,
+            'rejection'=>$rejection,
+            //'prdcount'   =>$timerange,
+            'prdpercent' =>$productionpercent,
         ];
-        Personal::where('id',$request->id)->update($update);
+        Production::where('id',$request->id)->update($update);
         return redirect()->back()->with('insert','Data has been updated successfully!.');
     }
 

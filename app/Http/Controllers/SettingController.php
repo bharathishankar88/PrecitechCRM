@@ -56,7 +56,7 @@ class SettingController extends Controller
                 $id=1;
             }
 
-           DB::insert('insert into Operators (name,id) values (?,?)', [$name,$id]);              
+           DB::insert('insert into operators (name,id) values (?,?)', [$name,$id]);              
 
            $data = DB::select("SELECT * FROM operators ");
 
@@ -238,7 +238,7 @@ class SettingController extends Controller
             return redirect()->route('/');
         }
     
-        $data = DB::select("SELECT * FROM users");
+        $data = DB::select("SELECT user.id,first_name,last_name,email,role.name as role FROM users user,roles role where user.role=role.id");
         $data1 = Roles::all();
         return view('settings.usersubmenu',compact('data','data1'));
     }

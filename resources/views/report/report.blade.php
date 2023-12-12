@@ -72,6 +72,7 @@
 				<thead>
 					
 					<tr>
+						<th>Id</th>
 						<th>Date</th>
 						<th>Product Name</th>
 						<th>Operator Name</th>
@@ -85,7 +86,8 @@
 				<tbody>
 					@foreach($data as $value)
 					<tr>
-						<td class="id">{{ date('d-m-Y', strtotime($value->created_at))  }}</td>
+						<td class="id">{{ $value->id }}</td>
+						<td class="date">{{ date('d-m-Y', strtotime($value->created_at))  }}</td>
 						<td class="name">{{ $value->pid }}</td>
 						<td class="operator">{{ $value->oid }}</td>
 						<td class="machine">{{ $value->mid }}</td>
@@ -93,9 +95,9 @@
 						<td class="prdcount">{{ $value->prd_count }}</td>
 						<td class="prdpercent">{{ round($value->prd_percent,2) }}%</td>
 						<td class=" text-center">
-							<!--<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
+							<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
 								<i class="fa fa-edit" style="color: #2196f3"></i>
-							</a>-->
+							</a>
 							<a href="{{ url('form/deleteProduction'.$value->id) }}" onclick="return confirm('Are you sure to want to delete it?')">
 								<i class="fa fa-trash" style="color: red;"></i>
 							</a>
@@ -122,23 +124,30 @@
 					{{ csrf_field() }}
 					<div class="modal-body">
 						<input type="hidden" class="form-control" id="e_id" name="id" value=""/>
+						<input type="hidden" class="form-control" id="e_prdid" name="prdid" value=""/>
 						<div class="modal-body">
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label">Operator</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="e_name" name="name" required="" value=""/>
+									<input type="text" class="form-control" id="e_name" name="name" required="" value="" />
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label">Duration</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="e_timerange" name="timerange" required="" value=""/>
+									<input type="text" class="form-control" id="e_timerange" name="timerange" required="" value="" />
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="" class="col-sm-3 col-form-label">Count</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="e_prdcount" name="prdcount" required="" value=""/>
+									<input type="text" class="form-control" id="e_itemProduced" name="itemproduced" required="" value="" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="" class="col-sm-3 col-form-label">Rejection</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="e_rejection" name="rejection" required="" value=""/>
 								</div>
 							</div>
 						</div>
@@ -163,9 +172,10 @@
 		{
 			var _this = $(this).parents('tr');
 			$('#e_id').val(_this.find('.id').text());
-			$('#e_name').val(_this.find('.name').text());
-			$('#e_email').val(_this.find('.email').text());
-			$('#e_phone').val(_this.find('.phone').text());
+			$('#e_prdid').val(_this.find('.name').text());
+			$('#e_timerange').val(_this.find('.timerange').text());
+			$('#e_itemProduced').val(_this.find('.prdcount').text());
+			$('#e_name').val(_this.find('.operator').text());
 		});
 	</script>
 	

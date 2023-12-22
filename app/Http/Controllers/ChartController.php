@@ -23,10 +23,23 @@ class ChartController extends Controller
         $fromdate = $request->fromdate;
         $todate   = $request->todate;
         $machine   = $request->machine;
+        $product   = $request->product;
 
+        $query="SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m,products pr where p.mid=m.id and p.pid=pr.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59'";
+
+        //if($machine!=null)
+        //$users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' and m.name like '%$machine%' group by m.name");
+        //else $users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' group by m.name");
+
+        if($product!=null)
+        $query = $query. " and pr.name like '%$product%'";
         if($machine!=null)
-        $users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' and m.name like '%$machine%' group by m.name");
-        else $users = DB::select("SELECT m.name ,avg(prd_percent) as prd_percent FROM productions p, machines m where p.mid=m.id and p.created_at BETWEEN '$fromdate 00:00:00'AND '$todate 23:59:59' group by m.name");
+        $query = $query. " and m.name like '%$machine%'"; 
+        
+        $query = $query. " group by m.name"; 
+
+        $users = DB::select($query);
+
 
         $labels = [];
         $data = [];

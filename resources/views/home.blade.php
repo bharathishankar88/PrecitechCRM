@@ -29,6 +29,9 @@
                             <input type="text" class="form-control input-sm" id="machine" name="machine" placeholder ="Machine">
 							</div>
                             <div class="col-sm-2">
+                            <input type="text" class="form-control input-sm" id="product" name="product" placeholder ="Product">
+							</div>
+                            <div class="col-sm-2">
 								<button type="submit" class="btn" name="search" title="Search"><img src="https://img.icons8.com/android/24/000000/search.png"/></button>
 							</div>
                             

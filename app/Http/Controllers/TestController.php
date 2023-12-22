@@ -23,11 +23,60 @@ class TestController extends Controller
         $data1 = Machine::all();
         $data2 = DB::select("SELECT * FROM operators");
         $data3 = DB::select("SELECT * FROM products");
+        $data4 = [
+            ['id' => '1', 'name' => '1:00'],
+            ['id' => '2', 'name' => '1:30'],
+            ['id' => '3', 'name' => '2:00'],
+            ['id' => '4', 'name' => '2:30'],
+            ['id' => '5', 'name' => '3:00'],
+            ['id' => '6', 'name' => '3:30'],
+            ['id' => '7', 'name' => '4:00'],
+            ['id' => '8', 'name' => '4:30'],
+            ['id' => '9', 'name' => '5:00'],
+            ['id' => '10', 'name' => '5:30'],
+            ['id' => '11', 'name' => '6:00'],
+            ['id' => '12', 'name' => '6:30'],
+            ['id' => '13', 'name' => '7:00'],
+            ['id' => '14', 'name' => '7:30'],
+            ['id' => '15', 'name' => '8:00'],
+            ['id' => '16', 'name' => '8:30'],
+            ['id' => '17', 'name' => '9:00'],
+            ['id' => '18', 'name' => '9:30'],
+            ['id' => '19', 'name' => '10:00'],
+            ['id' => '20', 'name' => '10:30'],
+            ['id' => '21', 'name' => '11:00'],
+            ['id' => '22', 'name' => '11:30'],
+            ['id' => '23', 'name' => '12:00'],
+            ['id' => '24', 'name' => '12:30'],
+            ['id' => '25', 'name' => '13:00'],
+            ['id' => '26', 'name' => '13:30'],
+            ['id' => '27', 'name' => '14:00'],
+            ['id' => '28', 'name' => '14:30'],
+            ['id' => '29', 'name' => '15:00'],
+            ['id' => '30', 'name' => '15:30'],
+            ['id' => '31', 'name' => '16:00'],
+            ['id' => '32', 'name' => '16:30'],
+            ['id' => '33', 'name' => '17:00'],
+            ['id' => '34', 'name' => '17:30'],
+            ['id' => '35', 'name' => '18:00'],
+            ['id' => '36', 'name' => '18:30'],
+            ['id' => '37', 'name' => '19:00'],
+            ['id' => '38', 'name' => '19:30'],
+            ['id' => '39', 'name' => '20:00'],
+            ['id' => '40', 'name' => '21:00'],
+            ['id' => '41', 'name' => '21:30'],
+            ['id' => '42', 'name' => '22:00'],
+            ['id' => '43', 'name' => '22:30'],
+            ['id' => '44', 'name' => '23:00'],
+            ['id' => '45', 'name' => '23:30'],
+            ['id' => '46', 'name' => '00:00'],
+
+        ];
         //     >where('created_at' , '>=', '$fromdate ')
         //     ->where('created_at', '<=', $todate)
         //     ->where('username','like','%' .$name. '%')
             //->get();
-        return view('form.form',compact('data','data1','data2','data3'));
+        return view('form.form',compact('data','data1','data2','data3','data4'));
     }
     // save
     public function viewTestSave(Request $request)
@@ -38,8 +87,10 @@ class TestController extends Controller
             'operator'=>'required',
             'product'=>'required',
             'machine'=>'required',
-            'timeRange'=>'required|numeric',
-            'itemProduced'=>'required|numeric',           
+           // 'timeRange'=>'required|numeric',
+            'itemProduced'=>'required|numeric',      
+            'timeslot1'    => 'required',
+            'timeslot2'      => 'required',     
             //'machine'   =>'required|email|unique:products',
             //'machine'   =>'required|min:11|numeric',
         ]);
@@ -52,8 +103,14 @@ class TestController extends Controller
             $timerange  = $request->timeRange;
             $itemProduced = $request->itemProduced;
             $createdBy = Auth::user()->id;
-            echo "inside save";
+            $timeslot1 = $request->timeslot1;
+            $timeslot2 = $request->timeslot2;
 
+            $t1 = strtotime($timeslot1);
+            $t2 = strtotime($timeslot2);
+
+            echo "inside save";
+            $timerange = round(abs($t1 - $t2) / 60,2);
             $target = DB::select("SELECT targetperhr FROM products where id= '$product'");
             $targetpermin = 0;
             $productionpercent = 0.0;
@@ -98,7 +155,14 @@ class TestController extends Controller
         $timerange = $request->timerange;
         $itemProduced = $request->itemproduced;
 
-        $target = DB::select("SELECT targetperhr FROM products where name= '$prdid'");
+        $production = DB::select("SELECT * FROM productions where id= '$id'");
+        if($production != null){
+            foreach($production as $value){
+            $prdid = $value->pid;
+            
+            }
+        }
+        $target = DB::select("SELECT targetperhr FROM products where id= '$prdid'");
             $targetpermin = 0;
             $productionpercent = 0.0;
             if($target != null){
@@ -113,7 +177,7 @@ class TestController extends Controller
             //'id'      =>$id,
             'rejection'=>$rejection,
             //'prdcount'   =>$timerange,
-            'prdpercent' =>$productionpercent,
+            'prdpercent' =>$productionpercent*100,
         ];
         Production::where('id',$request->id)->update($update);
         return redirect()->back()->with('insert','Data has been updated successfully!.');

@@ -29,7 +29,7 @@
 			<div class="form-group row">
 			<label class="col-form-label col-4">Data Entry For</label>
 				<div class="col-8">
-				<input type="date" class="form-control input-sm" id="todate" name="todate" required>
+				<input type="date" class="form-control input-sm" id="todate" name="todate" value="{{ old('todate') }}" max="<?php echo date("Y-m-d"); ?>" required>
 				@error('todate')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
@@ -97,7 +97,7 @@
 				</div>      	
 			</div>
 
-			<div class="form-group row">
+			<!--<div class="form-group row">
 				<label class="col-form-label col-4">Time Range</label>
 				<div class="col-8">
 					<input type="text" class="form-control @error('timeRange') is-invalid @enderror" name="timeRange" value="{{ old('timeRange') }}" placeholder="Enter Time">
@@ -107,8 +107,46 @@
 					</span>
 					@enderror
 				</div>        	
-			</div>
+			</div>-->
 			
+			
+			<div class="form-group row">
+				<label class="col-form-label col-4">Time Slot</label>
+				<div class="col-sm-2">
+				<select class="form-control @error('timeslot1') is-invalid @enderror" name="timeslot1">
+              		<option value="">--start time--</option>
+    					@foreach ($data4 as $value)
+             			<option value="{{ $value['name'] }}" {{ (old('timeslot1') == $value['name'] ? "selected":"") }} >
+                		{{ $value['name'] }}
+              			</option>
+     					@endforeach
+    			</select>
+				@error('timeslot1')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
+				</div>
+				
+				<div class="col-sm-2">
+
+				<select class="form-control @error('timeslot2') is-invalid @enderror" name="timeslot2">
+              		<option value="">--end time--</option>
+    					@foreach ($data4 as $value)
+             			<option value="{{ $value['name'] }}" {{ (old('timeslot2') == $value['name'] ? "selected":"") }} >
+                		{{ $value['name'] }}
+              			</option>
+     					@endforeach
+    			</select>
+					@error('timeslot2')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
+				</div>      	
+			</div>
+
+
 			<div class="form-group row">
 				<label class="col-form-label col-4">No. Items Produced</label>
 				<div class="col-8">

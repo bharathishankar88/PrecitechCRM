@@ -37,9 +37,9 @@
 				</div>        	
 			</div>
 			<div class="form-group row">
-				<label class="col-form-label col-4">Target Hours</label>
+				<label class="col-form-label col-4">Target per Hour</label>
 				<div class="col-8">
-					<input type="tel" class="form-control @error('targetHour') is-invalid @enderror" name="targetHour" value="{{ old('targetHour') }}" placeholder="Enter Target Hours">
+					<input type="tel" class="form-control @error('targetHour') is-invalid @enderror" name="targetHour" value="{{ old('targetHour') }}" placeholder="Enter Target/hr">
 					@error('targetHour')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@
 					<tr>
 						<th>Id</th>					
 						<th>Product Name</th>
-						<th>Target Hours</th>							
+						<th>Target per Hour</th>							
 						<th>Delete</th>
 					</tr>
 				</thead>

@@ -72,7 +72,7 @@
 				<thead>
 					
 					<tr>
-						<th>Id</th>
+						<!--<th>Id</th>-->
 						<th>Date</th>
 						<th>Product Name</th>
 						<th>Operator Name</th>
@@ -86,7 +86,7 @@
 				<tbody>
 					@foreach($data as $value)
 					<tr>
-						<td class="id">{{ $value->id }}</td>
+						<!--<td class="id">{{ $value->id }}</td>-->
 						<td class="date">{{ date('d-m-Y', strtotime($value->created_at))  }}</td>
 						<td class="name">{{ $value->pid }}</td>
 						<td class="operator">{{ $value->oid }}</td>
@@ -95,9 +95,9 @@
 						<td class="prdcount">{{ $value->prd_count }}</td>
 						<td class="prdpercent">{{ round($value->prd_percent,2) }}%</td>
 						<td class=" text-center">
-							<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
+							<!--<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
 								<i class="fa fa-edit" style="color: #2196f3"></i>
-							</a>
+							</a>-->
 							<a href="{{ url('form/deleteProduction'.$value->id) }}" onclick="return confirm('Are you sure to want to delete it?')">
 								<i class="fa fa-trash" style="color: red;"></i>
 							</a>

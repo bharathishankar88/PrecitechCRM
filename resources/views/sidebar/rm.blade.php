@@ -87,6 +87,7 @@
             submenu.style.display = 'block';
         }
     }
+
     function toggleSubmenuRM(submenuId) {
         var submenu = document.getElementById(submenuId);
         if (submenu.style.display === 'block') {

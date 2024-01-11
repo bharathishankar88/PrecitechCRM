@@ -27,7 +27,7 @@ class ReportController extends Controller
         $operator = $request->operator;
         $machine = $request->machine;
 
-        $query = "SELECT p.id as id,o.name as oid,m.name as mid, pr.name as pid, time_range,prd_count,prd_percent,p.created_at as created_at FROM productions p, operators o, products pr,machines m where p.pid=pr.id and p.oid=o.id and p.mid=m.id  and  p.created_at BETWEEN '$fromdate 00:00:00' AND '$todate 23:59:59' ";
+        $query = "SELECT p.id as id,o.name as oid,m.name as mid, pr.name as pid,time_slot as time_range,prd_count,prd_percent,p.created_at as created_at FROM productions p, operators o, products pr,machines m where p.pid=pr.id and p.oid=o.id and p.mid=m.id  and  p.created_at BETWEEN '$fromdate 00:00:00' AND '$todate 23:59:59' ";
         if($operator!=null)
         $query = $query. " and o.name like '%$operator%'";
         if($machine!=null)
@@ -60,7 +60,7 @@ class ReportController extends Controller
         $operator = Cookie::get('operator');
         $machine = Cookie::get('machine');
 
-        $query = "SELECT pr.id as id,o.name as oid,m.name as mid, pr.name as pid, time_range,prd_count,prd_percent,p.created_at as created_at FROM productions p, operators o, products pr,machines m where p.pid=pr.id and p.oid=o.id and p.mid=m.id  and  p.created_at BETWEEN '$fromdate 00:00:00' AND '$todate 23:59:59' ";
+        $query = "SELECT pr.id as id,o.name as oid,m.name as mid, pr.name as pid,time_slot as time_range,prd_count,prd_percent,p.created_at as created_at FROM productions p, operators o, products pr,machines m where p.pid=pr.id and p.oid=o.id and p.mid=m.id  and  p.created_at BETWEEN '$fromdate 00:00:00' AND '$todate 23:59:59' ";
         if($operator!=null)
         $query = $query. " and o.name like '%$operator%'";
         if($machine!=null)
@@ -80,8 +80,8 @@ class ReportController extends Controller
         $sheet->setCellValue('B'.$i, 'ProductName');
         $sheet->setCellValue('C'.$i, 'Operator');
         $sheet->setCellValue('D'.$i, 'Machine');
-        $sheet->setCellValue('E'.$i, 'Duration');
-        $sheet->setCellValue('F'.$i, 'No.OfProduct');
+        $sheet->setCellValue('E'.$i, 'Time Slot');
+        $sheet->setCellValue('F'.$i, 'No.Of.Product');
         $sheet->setCellValue('G'.$i, 'Percentage');
         foreach($data as $value){
             $i++;

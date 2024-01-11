@@ -3,6 +3,8 @@
 @section('content')
 @include('sidebar.dashboard')
 <main class="col bg-faded py-3 flex-grow-1">
+
+
     <h3>Data Entry</h3>
     <br>
 	<br>
@@ -29,7 +31,7 @@
 			<div class="form-group row">
 			<label class="col-form-label col-4">Data Entry For</label>
 				<div class="col-8">
-				<input type="date" class="form-control input-sm" id="todate" name="todate" value="{{ old('todate') }}" max="<?php echo date("Y-m-d"); ?>" required>
+				<input type="date" class="form-control input-sm" id="todate" name="todate" value="<?php echo date('Y-m-d'); ?>" max="<?php echo date("Y-m-d"); ?>" required>
 				@error('todate')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
@@ -109,11 +111,11 @@
 				</div>        	
 			</div>-->
 			
-			
+			<div id="box">
 			<div class="form-group row">
 				<label class="col-form-label col-4">Time Slot</label>
 				<div class="col-sm-2">
-				<select class="form-control @error('timeslot1') is-invalid @enderror" name="timeslot1">
+				<select class="form-control @error('timeslot1') is-invalid @enderror" name="timeslot1[]">
               		<option value="">--start time--</option>
     					@foreach ($data4 as $value)
              			<option value="{{ $value['name'] }}" {{ (old('timeslot1') == $value['name'] ? "selected":"") }} >
@@ -130,7 +132,7 @@
 				
 				<div class="col-sm-2">
 
-				<select class="form-control @error('timeslot2') is-invalid @enderror" name="timeslot2">
+				<select class="form-control @error('timeslot2') is-invalid @enderror" name="timeslot2[]">
               		<option value="">--end time--</option>
     					@foreach ($data4 as $value)
              			<option value="{{ $value['name'] }}" {{ (old('timeslot2') == $value['name'] ? "selected":"") }} >
@@ -150,7 +152,7 @@
 			<div class="form-group row">
 				<label class="col-form-label col-4">No. Items Produced</label>
 				<div class="col-8">
-					<input type="tel" class="form-control @error('itemProduced') is-invalid @enderror" name="itemProduced" value="{{ old('itemProduced') }}" placeholder="Enter Items Produced">
+					<input type="tel" class="form-control @error('itemProduced') is-invalid @enderror" name="itemProduced[]" value="{{ old('itemProduced[]') }}" placeholder="Enter Items Produced" required>
 					@error('itemProduced')
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $message }}</strong>
@@ -158,8 +160,10 @@
 					@enderror  
 				</div>      	
 			</div>
+</div>
+<hr>
+<a href="#" id="add"><i class="fa fa-plus" style="color: red;"></i>Add More Input Field</a>
 
-			
 			
 
 
@@ -184,6 +188,27 @@
             $('#error').hide();
         },5000);
         
-    </script>        
+    </script>    
+	<script>
+$(document).ready(function(){    
+    $('#add').click(function(){    
+		var inp = $('#box');        
+        var i =  1;        
+        $('<div><div class="form-group row"><label class="col-form-label col-4">Time Slot</label>	<div class="col-sm-2">	<select class="form-control @error("timeslot1") is-invalid @enderror" name="timeslot1[]">  <option value="">--start time--</option>	@foreach ($data4 as $value)	<option value="{{ $value["name"] }}" {{ (old("timeslot1") == $value["name"] ? "selected":"") }} >  		{{ $value["name"] }}   			</option>	@endforeach		</select>	@error("timeslot1")			<span class="invalid-feedback" role="alert">		<strong>{{ $message }}</strong>			</span>				@enderror	</div>			<div class="col-sm-2"><select class="form-control @error("timeslot2") is-invalid @enderror" name="timeslot2[]"><option value="">--end time--</option>		@foreach ($data4 as $value)    <option value="{{ $value["name"] }}" {{ (old("timeslot2") == $value["name"] ? "selected":"") }} >{{ $value["name"] }}	</option> @endforeach	</select>	@error("timeslot2")	<span class="invalid-feedback" role="alert">		<strong>{{ $message }}</strong>	</span>	@enderror</div>    </div><div class="form-group row"><label class="col-form-label col-4">No. Items Produced</label><div class="col-8">	<input type="tel" class="form-control" name="itemProduced[]" placeholder="Enter Items Produced" required>  </div>      	</div><i class="fa fa-trash" style="color: red;" id="remove"></i> </div><hr>').appendTo(inp);
+        i++;    
+		//window.scrollTo(0, 10000);
+    });
+    
+    
+    
+    $('body').on('click','#remove',function(){        
+        $(this).parent('div').remove();
+        
+    });
+
+        
+});
+
+</script>    
 </main>
 @endsection

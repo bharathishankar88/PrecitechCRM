@@ -47,7 +47,12 @@ Route::post('form/login',[App\Http\Controllers\LoginController::class,'login'])-
 Route::get('form/logout',[App\Http\Controllers\LoginController::class,'logout'])->name('form/logout');
 
 //RM
-Route::get('rm/new',[App\Http\Controllers\RMController::class,'viewRM'])->name('rm/new');
+Route::get('rm/formin',[App\Http\Controllers\RMController::class,'viewDataIn'])->name('rm/formin');
+Route::post('rm/datainsave',[App\Http\Controllers\RMController::class,'viewDataInSave'])->name('rm/datainsave');
+Route::get('rm/formout',[App\Http\Controllers\RMController::class,'viewDataOut'])->name('rm/formout');
+Route::post('rm/dataoutsave',[App\Http\Controllers\RMController::class,'viewDataOutSave'])->name('rm/dataoutsave');
+Route::get('rm/report',[App\Http\Controllers\RMController::class,'viewDataReport'])->name('rm/report');
+Route::post('rm/reportsave',[App\Http\Controllers\RMController::class,'viewDataReportSave'])->name('rm/reportsave');
 
 //settings
 Route::get('form/addoperator',[App\Http\Controllers\SettingController::class,'viewOperator'])->name('form/addoperator');

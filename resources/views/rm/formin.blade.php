@@ -3,12 +3,12 @@
 @section('content')
 @include('sidebar.dashboard')
 <main class="col bg-faded py-3 flex-grow-1">
-    <h3>Data Entry</h3>
+    <h3>Data In</h3>
     <br>
 	<br>
 	<br>
 	<div class="signup-form">
-		<form action="{{ route('form/page_test/save') }}" method="post" class="form-horizontal">
+		<form action="{{ route('rm/datainsave') }}" method="post" class="form-horizontal">
 			{{ csrf_field() }}
 			
 			{{-- success --}}
@@ -82,8 +82,8 @@
 			<div class="form-group row">
 				<label class="col-form-label col-4">Size</label>
 				<div class="col-8">
-					<input type="text" class="form-control @error('size') is-invalid @enderror" name="size" value="{{ old('size') }}" placeholder="Enter Size">
-					@error('size')
+					<input type="text" class="form-control @error('sizemm') is-invalid @enderror" name="sizemm" value="{{ old('sizemm') }}" placeholder="Enter Size">
+					@error('sizemm')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
 					</span>

@@ -77,7 +77,7 @@
 						<th>Product Name</th>
 						<th>Operator Name</th>
 						<th>Machine</th>
-						<th>Duration</th>						
+						<th>Time Slot</th>						
 						<th>No.of.product</th>
 						<th>Percent</th>
 						<th>Modify</th>

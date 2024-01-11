@@ -63,13 +63,14 @@ class TestController extends Controller
             ['id' => '37', 'name' => '19:00'],
             ['id' => '38', 'name' => '19:30'],
             ['id' => '39', 'name' => '20:00'],
-            ['id' => '40', 'name' => '21:00'],
-            ['id' => '41', 'name' => '21:30'],
-            ['id' => '42', 'name' => '22:00'],
-            ['id' => '43', 'name' => '22:30'],
-            ['id' => '44', 'name' => '23:00'],
-            ['id' => '45', 'name' => '23:30'],
-            ['id' => '46', 'name' => '00:00'],
+            ['id' => '40', 'name' => '20:30'],
+            ['id' => '41', 'name' => '21:00'],
+            ['id' => '42', 'name' => '21:30'],
+            ['id' => '43', 'name' => '22:00'],
+            ['id' => '44', 'name' => '22:30'],
+            ['id' => '45', 'name' => '23:00'],
+            ['id' => '46', 'name' => '23:30'],
+            ['id' => '47', 'name' => '00:00'],
 
         ];
         //     >where('created_at' , '>=', '$fromdate ')
@@ -88,7 +89,7 @@ class TestController extends Controller
             'product'=>'required',
             'machine'=>'required',
            // 'timeRange'=>'required|numeric',
-            'itemProduced'=>'required|numeric',      
+            //'itemProduced'=>'required|numeric',      
             'timeslot1'    => 'required',
             'timeslot2'      => 'required',     
             //'machine'   =>'required|email|unique:products',
@@ -101,15 +102,19 @@ class TestController extends Controller
             $product    = $request->product;
             $machine    = $request->machine;
             $timerange  = $request->timeRange;
+            
             $itemProduced = $request->itemProduced;
             $createdBy = Auth::user()->id;
             $timeslot1 = $request->timeslot1;
             $timeslot2 = $request->timeslot2;
-
-            $t1 = strtotime($timeslot1);
-            $t2 = strtotime($timeslot2);
+            $i = 0;
+            foreach($itemProduced as $productCount){
+            
+            $t1 = strtotime($timeslot1[$i]);
+            $t2 = strtotime($timeslot2[$i]);
 
             echo "inside save";
+            echo $t1;
             $timerange = round(abs($t1 - $t2) / 60,2);
             $target = DB::select("SELECT targetperhr FROM products where id= '$product'");
             $targetpermin = 0;
@@ -117,7 +122,7 @@ class TestController extends Controller
             if($target != null){
                 foreach($target as $value){
                 $targetpermin = $value->targetperhr/60;
-                $productionpercent= $itemProduced/($timerange*$targetpermin);
+                $productionpercent= $itemProduced[$i]/($timerange*$targetpermin);
                 }
 
             }
@@ -127,7 +132,8 @@ class TestController extends Controller
             $Production->mid    = $machine;
             $Production->pid    = $product;
             $Production->time_range    = $timerange;
-            $Production->prd_count = $itemProduced;
+            $Production->time_slot    = $timeslot1[$i].'-'.$timeslot2[$i];
+            $Production->prd_count = $itemProduced[$i];
             $Production->prd_percent = $productionpercent * 100;
             $Production->created_by = $createdBy;
             $Production->modified_by = $createdBy;
@@ -138,6 +144,8 @@ class TestController extends Controller
             echo $createdBy;
 
             $Production->save();
+            $i=$i+1;
+        }
             return redirect()->back()->with('insert','Data has been insert successfully!.');
 
         }catch(Exception $e){

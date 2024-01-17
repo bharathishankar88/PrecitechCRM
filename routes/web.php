@@ -71,4 +71,16 @@ Route::get('form/adduser',[App\Http\Controllers\SettingController::class,'viewUs
 Route::post('form/usersave',[App\Http\Controllers\SettingController::class,'saveUser'])->name('form/usersave');
 Route::get('form/deleteUsers{id}',[App\Http\Controllers\SettingController::class,'deleteUser']);
 
+Route::get('form/addsupplier',[App\Http\Controllers\SettingController::class,'viewSupplier'])->name('form/addsupplier');
+Route::post('form/suppliersave',[App\Http\Controllers\SettingController::class,'saveSupplier'])->name('form/suppliersave');
+Route::get('form/deleteSupplier{id}',[App\Http\Controllers\SettingController::class,'deleteSupplier']);
+
+Route::get('form/addgrades',[App\Http\Controllers\SettingController::class,'viewGrades'])->name('form/addgrades');
+Route::post('form/gradessave',[App\Http\Controllers\SettingController::class,'saveGrades'])->name('form/gradessave');
+Route::get('form/deleteGrades{id}',[App\Http\Controllers\SettingController::class,'deleteGrades']);
+
+Route::get('form/addsize',[App\Http\Controllers\SettingController::class,'viewSize'])->name('form/addsize');
+Route::post('form/sizesave',[App\Http\Controllers\SettingController::class,'saveSize'])->name('form/sizesave');
+Route::get('form/deleteSize{id}',[App\Http\Controllers\SettingController::class,'deleteSize']);
+
 

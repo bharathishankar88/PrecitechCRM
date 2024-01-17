@@ -1,9 +1,9 @@
 @extends('layouts.master')
 @include('navbar.header')
 @section('content')
-@include('sidebar.dashboard')
+@include('sidebar.rm')
 <main class="col bg-faded py-3 flex-grow-1">
-    <h3>Data Report</h3>
+    <h3>Stock Report</h3>
     <br>
 	
 
@@ -26,7 +26,7 @@
 
 		{{-- search --}}
 
-		<form action="{{ route('rm/report') }}" method ="GET">
+		<!--<form action="{{ route('rm/report') }}" method ="GET">
 			@csrf
 			<br>
 			<div class="container">
@@ -40,9 +40,7 @@
                             <div class="col-sm-2">
                             <input type="date" class="form-control input-sm" id="todate" name="todate" required>
 							</div>
-                            <!--<div class="col-sm-2">
-                            <label for="date" class="col-form-label col-sm-2">Machine</label>
-                            </div>-->
+                            
                             <div class="col-sm-2">
                             <input type="text" class="form-control input-sm" id="operator" name="operator" placeholder ="operator">
 							</div>
@@ -64,7 +62,7 @@
 				</div>
 			</div>
 			<br>
-		</form>
+		</form>-->
 
 		
 		<div class="container-fluid">
@@ -72,8 +70,6 @@
 				<thead>
 					
 					<tr>
-						<th>Product Name</th>
-												
 						<th>size</th>
 						<th>Overallstock</th>
 						<th>Utilisedstock</th>
@@ -84,11 +80,10 @@
 				<tbody>
 					@foreach($data as $value)
 					<tr>
-						<td class="machine">{{ $value->name }}</td>
 						<td class="timerange">{{ $value->size }}</td>
 						<td class="name">{{ $value->qty1 }}</td>
 						<td class="operator">{{ $value->qty }}</td>
-						<td class="operator">{{ $value->qty-$value->qty1 }}</td>
+						<td class="operator" @if(($value->qty1-$value->qty)<500) style="color:red"@endif>{{ $value->qty1-$value->qty }}</td>
 
 						
 					</tr>

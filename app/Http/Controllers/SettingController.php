@@ -277,7 +277,7 @@ class SettingController extends Controller
             //$data = DB::select("SELECT * FROM users ");
 
             return redirect()->back()->with('insert','Data has been insert successfully!.');
-            return view('form.usersubmenu',compact('data'));
+            return view('settings.usersubmenu',compact('data'));
 
        }catch(Exception $e){
             echo $e;
@@ -325,7 +325,194 @@ class SettingController extends Controller
          //     ->where('created_at', '<=', $todate)
          //     ->where('username','like','%' .$name. '%')
              ->get();
-         return view('form.operatorsubmenu',compact('data'));
+         return view('settings.operatorsubmenu',compact('data'));
      }
+
+      //supplier
+    public function viewSupplier()
+    {
+        if(Auth::guest())
+        {
+            return redirect()->route('/');
+        }
     
+        $data = DB::select("SELECT * FROM suppliers ");
+        //$data1 = Roles::all();
+        return view('settings.suppliersubmenu',compact('data'));
+    }
+    // save
+    public function saveSupplier(Request $request)
+    {
+        echo "inside viewTestSave";
+        $request->validate([
+            'suppName'=>'required|string'      
+            
+        ]);
+   
+        try{
+            $name = $request->suppName;
+            $idindex = DB::select("select max(id)+1 as id from suppliers");
+            $id=0;
+           
+            if($idindex != null){
+                foreach($idindex as $value){
+                $id = $value->id;                
+                }
+            }else{
+            $id=1;
+            }
+
+            if($id==null){
+                $id=1;
+            }
+
+           DB::insert('insert into suppliers (name,id) values (?,?)', [$name,$id]);              
+
+           $data = DB::select("SELECT * FROM suppliers ");
+
+            return redirect()->back()->with('insert','Data has been insert successfully!.');
+            return view('settings.suppliersubmenu',compact('data'));
+
+
+       }catch(Exception $e){
+            echo $e;
+            return redirect()->back()->with('error','Data insert fail!.');
+        }
+
+
+    }
+   
+    // delete
+    public function deleteSupplier($id)
+    {
+        $delete = Supplier::find($id);
+        $delete->delete();
+        return redirect()->back()->with('insert','Data has been deleted successfully!.');
+    }
+
+    //grades
+    public function viewGrades()
+    {
+        if(Auth::guest())
+        {
+            return redirect()->route('/');
+        }
+    
+        $data = DB::select("SELECT * FROM grades ");
+        //$data1 = Roles::all();
+        return view('settings.gradesubmenu',compact('data'));
+    }
+    // save
+    public function saveGrades(Request $request)
+    {
+        echo "inside viewTestSave";
+        $request->validate([
+            'grdName'=>'required|string'      
+            
+        ]);
+   
+        try{
+            $name = $request->grdName;
+            $idindex = DB::select("select max(id)+1 as id from grades");
+            $id=0;
+           
+            if($idindex != null){
+                foreach($idindex as $value){
+                $id = $value->id;                
+                }
+            }else{
+            $id=1;
+            }
+
+            if($id==null){
+                $id=1;
+            }
+
+           DB::insert('insert into grades(name,id) values (?,?)', [$name,$id]);              
+
+           $data = DB::select("SELECT * FROM grades ");
+
+            return redirect()->back()->with('insert','Data has been insert successfully!.');
+            return view('settings.gradesubmenu',compact('data'));
+
+
+       }catch(Exception $e){
+            echo $e;
+            return redirect()->back()->with('error','Data insert fail!.');
+        }
+
+
+    }
+   
+    // delete
+    public function deleteGrades($id)
+    {
+        $delete = Grades::find($id);
+        $delete->delete();
+        return redirect()->back()->with('insert','Data has been deleted successfully!.');
+    }
+
+    //size
+    public function viewSize()
+    {
+        if(Auth::guest())
+        {
+            return redirect()->route('/');
+        }
+    
+        $data = DB::select("SELECT * FROM sizes ");
+        //$data1 = Roles::all();
+        return view('settings.sizesubmenu',compact('data'));
+    }
+    // save
+    public function saveSize(Request $request)
+    {
+        echo "inside viewTestSave";
+        $request->validate([
+            'size'=>'required|string'      
+            
+        ]);
+   
+        try{
+            $size_mm = $request->size;
+            $idindex = DB::select("select max(id)+1 as id from sizes");
+            $id=0;
+           
+            if($idindex != null){
+                foreach($idindex as $value){
+                $id = $value->id;                
+                }
+            }else{
+            $id=1;
+            }
+
+            if($id==null){
+                $id=1;
+            }
+
+           DB::insert('insert into sizes (size_mm,id) values (?,?)', [$size_mm,$id]);              
+
+           $data = DB::select("SELECT * FROM sizes ");
+
+            return redirect()->back()->with('insert','Data has been insert successfully!.');
+            return view('settings.sizesubmenu',compact('data'));
+
+
+       }catch(Exception $e){
+            echo $e;
+            return redirect()->back()->with('error','Data insert fail!.');
+        }
+
+
+    }
+   
+    // delete
+    public function deleteSize($id)
+    {
+        $delete = Sizes::find($id);
+        $delete->delete();
+        return redirect()->back()->with('insert','Data has been deleted successfully!.');
+    }
+
+     
 }

@@ -42,9 +42,39 @@
                         <li class="nav-item {{ Request::is('form/adduser') ? 'active' : '' }}">
                              <a class="nav-link pl-0" href="{{ route('form/adduser') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Add User</span></a>
                         </li>
+                        <li class="nav-item {{ Request::is('form/addsupplier') ? 'active' : '' }}">
+                             <a class="nav-link pl-0" href="{{ route('form/addsupplier') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Add Supplier</span></a>
+                        </li>
+                        <li class="nav-item {{ Request::is('form/addgrades') ? 'active' : '' }}">
+                             <a class="nav-link pl-0" href="{{ route('form/addgrades') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Add Grades</span></a>
+                        </li>
+                        <li class="nav-item {{ Request::is('form/addsize') ? 'active' : '' }}">
+                             <a class="nav-link pl-0" href="{{ route('form/addsize') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Add Sizes</span></a>
+                        </li>
                     </ul>
                 </li>
                 @endif 
+                <style>
+                 .submenuRM {
+                         display: none;
+                        }
+                </style>
+                <li class="nav-item">
+                    <a class="nav-link pl-0" href="#" onclick="toggleSubmenuRM('submenuRM1')"><i class="fa fa-cog fa-fw"></i> <span class="d-none d-md-inline">RM</span></a>
+                    <ul class="submenuRM" id="submenuRM1">
+                    @if(Auth::user()->role!=3)
+                    <li class="nav-item {{ Request::is('rm/formin') ? 'active' : '' }}">
+                             <a class="nav-link pl-0" href="{{ route('rm/formin') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Data In</span></a>
+                        </li>                 
+                        <li class="nav-item {{ Request::is('rm/formout') ? 'active' : '' }}">
+                             <a class="nav-link pl-0" href="{{ route('rm/formout') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Data Out</span></a>
+                        </li> 
+                        @endif
+                        <li class="nav-item {{ Request::is('rm/report') ? 'active' : '' }}">
+                             <a class="nav-link pl-0" href="{{ route('rm/report') }}"><i class="fa fa-plus"></i> <span class="d-none d-md-inline">Report</span></a>
+                        </li> 
+                    </ul>
+                </li>
                 <li class="nav-item {{ Request::is('form/logout') ? 'active' : '' }}">
                     <a class="nav-link pl-0" href="{{ route('form/logout') }}"><i class="fa fa-sign-out"></i> <span class="d-none d-md-inline">Logout</span></a>
                 </li>
@@ -60,6 +90,19 @@
         } else {
             // Hide all other submenus before displaying the selected one
             var allSubmenus = document.querySelectorAll('.submenu');
+            allSubmenus.forEach(function (element) {
+                element.style.display = 'none';
+            });
+            submenu.style.display = 'block';
+        }
+    }
+    function toggleSubmenuRM(submenuId) {
+        var submenu = document.getElementById(submenuId);
+        if (submenu.style.display === 'block') {
+            submenu.style.display = 'none';
+        } else {
+            // Hide all other submenus before displaying the selected one
+            var allSubmenus = document.querySelectorAll('.submenuRM');
             allSubmenus.forEach(function (element) {
                 element.style.display = 'none';
             });

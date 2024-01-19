@@ -25,9 +25,10 @@ class RMController extends Controller
         $data1 = DB::select("SELECT * FROM suppliers");
         $data2 = DB::select("SELECT * FROM grades");
         $data3 = DB::select("SELECT * FROM products");
-        $data4 = DB::select("SELECT A.id,B.name as supplierid,C.name as gradeid,size,quantity  FROM rmins A,suppliers B,grades C where A.supplierid=B.id and A.gradeid=C.id");
-        
-        return view('rm.formin',compact('data','data1','data2','data3','data4'));
+        $data4 = DB::select("SELECT A.id,B.name as supplierid,C.name as gradeid,size,quantity,batch  FROM rmins A,suppliers B,grades C where A.supplierid=B.id and A.gradeid=C.id");
+        $data5 = DB::select("SELECT * FROM sizes");
+
+        return view('rm.formin',compact('data','data1','data2','data3','data4','data5'));
     }
     // save
     public function viewDataInSave(Request $request)
@@ -39,6 +40,7 @@ class RMController extends Controller
             'grade' =>'required',
             'sizemm' =>'required',
             'qty' =>'required',
+            'batch'=>'required|unique:rmins',
         ]);
     
         try{
@@ -48,6 +50,7 @@ class RMController extends Controller
             $sizemm = $request->sizemm;
             $quantity = $request->qty;
             $createdBy = Auth::user()->id;
+            $batch = $request->batch;
 
             $idindex = DB::select("select max(id)+1 as id from rmins");
             $id=0;
@@ -66,7 +69,7 @@ class RMController extends Controller
 
              
        //DB::insert('insert into rmins (name,id) values (?,?)', [$name,$id]); 
-       DB::insert('INSERT INTO rmins (id,supplierid,gradeid,size,quantity,created_by,modified_by) VALUES (?,?,?,?,?,?,?)', [$id,$supplierid,$gradeid,$sizemm,$quantity,$createdBy,$createdBy]);
+       DB::insert('INSERT INTO rmins (id,supplierid,gradeid,size,quantity,batch,created_by,modified_by) VALUES (?,?,?,?,?,?,?,?)', [$id,$supplierid,$gradeid,$sizemm,$quantity,$batch,$createdBy,$createdBy]);
     
           
 
@@ -90,9 +93,11 @@ class RMController extends Controller
         $data1 = DB::select("SELECT * FROM suppliers");
         $data2 = DB::select("SELECT * FROM grades");
         $data3 = DB::select("SELECT * FROM products");
-        $data4 = DB::select("SELECT A.id,B.name as productid,C.name as gradeid,size,quantity FROM rmouts A,products B,grades C where A.productid=B.id and A.gradeid=C.id");
-        
-        return view('rm.formout',compact('data','data1','data2','data3','data4'));
+        $data4 = DB::select("SELECT A.id,B.name as productid,C.name as gradeid,size,quantity,batch FROM rmouts A,products B,grades C where A.productid=B.id and A.gradeid=C.id");
+        $data5 = DB::select("SELECT * FROM sizes");
+        $data6 = DB::select("SELECT distinct batch FROM rmins where completed=0");
+
+        return view('rm.formout',compact('data','data1','data2','data3','data4','data5','data6'));
     }
     // save
     public function viewDataOutSave(Request $request)
@@ -100,7 +105,7 @@ class RMController extends Controller
         echo "inside viewTestSave";
         $request->validate([
             'todate'=>'required',
-            'supplier' =>'required',
+            'batch' =>'required',
             'grade' =>'required',
             'size' =>'required',
             'qty' =>'required',
@@ -115,6 +120,7 @@ class RMController extends Controller
             $quantity = $request->qty;
             $product = $request->product;
             $createdBy = Auth::user()->id;
+            $batch = $request->batch;
 
             $idindex = DB::select("select max(id)+1 as id from rmouts");
             $id=0;
@@ -133,7 +139,7 @@ class RMController extends Controller
 
              
        //DB::insert('insert into rmins (name,id) values (?,?)', [$name,$id]); 
-       DB::insert('INSERT INTO rmouts (id,gradeid,size,quantity,productid,created_by,modified_by) VALUES (?,?,?,?,?,?,?)',[$id,$gradeid,$sizemm,$quantity,$product,$createdBy,$createdBy]);
+       DB::insert('INSERT INTO rmouts (id,gradeid,size,quantity,productid,batch,created_by,modified_by) VALUES (?,?,?,?,?,?,?,?)',[$id,$gradeid,$sizemm,$quantity,$product,$batch,$createdBy,$createdBy]);
     
           
 
@@ -154,11 +160,28 @@ class RMController extends Controller
             return redirect()->route('/');
         }
 
-       // $data = Personal::all();
-        //$data1 = DB::select("SELECT * FROM suppliers");
-        //$data2 = DB::select("SELECT * FROM grades");
-        //$data = DB::select("SELECT sum(a.quantity) as qty,b.quantity as qty1,c.name as name,a.size as size FROM rmouts a, rmins b,products c,users d where a.gradeid=b.gradeid and a.size=b.size and a.productid=c.id and a.created_by=d.id group by a.size,b.quantity,c.name,a.size");
-        $data = DB::select("SELECT sum(a.quantity) as qty,b.quantity as qty1,a.size as size FROM rmouts a, rmins b where a.gradeid=b.gradeid and a.size=b.size group by a.size,b.quantity,a.size");
+       $data1 = DB::select("SELECT batch,quantity FROM rmins");
+       foreach($data1 as $dt1){
+        $data2 = DB::select("SELECT sum(quantity) as quantity FROM rmouts where batch='".$dt1->batch."'");
+        if($dt1->quantity==$data2[0]->quantity){
+            DB::update('update rmins set completed = ? where batch=?', [1,$dt1->batch]);
+            DB::update('update rmouts set completed = ? where batch=?', [1,$dt1->batch]);
+ 
+        }
+    }
+
+    $data = DB::select("SELECT sum(quantity) as qty,group_concat(distinct batch) as batch,0 as qty1,size FROM rmouts where completed=0 group by size");
+    //this is also valid
+    for($i = 0; $i < sizeof($data); $i++){
+   
+        $data4 = DB::select("SELECT sum(quantity) as qty1 FROM rmins where batch in ('".str_replace(",", "','", $data[$i]->batch)."')");
+     
+        $data[$i]->qty1=$data4[0]->qty1;
+        
+        
+        
+    }
+       // $data = DB::select("SELECT sum(a.quantity) as qty,b.quantity as qty1,a.size as size FROM rmouts a, rmins b where a.gradeid=b.gradeid and a.size=b.size group by a.size,b.quantity,a.size");
         
         return view('rm.report',compact('data'));
     }

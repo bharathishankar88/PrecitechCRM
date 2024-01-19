@@ -38,25 +38,7 @@
 				</div>      	
 			</div>
                            
-			<div class="form-group row">
-				<label class="col-form-label col-4">Supplier</label>
-				<div class="col-8">
-				<select class="form-control @error('supplier') is-invalid @enderror" name="supplier">
-              		<option value="">Select Supplier</option>
-    					@foreach ($data1 as $value)
-             			<option value="{{ $value->id }}" {{ (old('supplier') == $value->id ? "selected":"") }}>
-                		{{ $value->name }}
-              			</option>
-     					@endforeach
-    			</select>
-				@error('supplier')
-					<span class="invalid-feedback" role="alert">
-						<strong>{{ $message }}</strong>
-					</span>
-				@enderror
-				</div>      	
-			</div>
-
+			
 			
 
 			<div class="form-group row">
@@ -79,17 +61,47 @@
 			</div>
 
 			
+			
 			<div class="form-group row">
 				<label class="col-form-label col-4">Size</label>
 				<div class="col-8">
-					<input type="text" class="form-control @error('size') is-invalid @enderror" name="size" value="{{ old('size') }}" placeholder="Enter Size">
+				<select class="form-control @error('size') is-invalid @enderror" name="size">
+              		<option value="">Select Size</option>
+    					@foreach ($data5 as $value)
+             			<option value="{{ $value->size_mm }}" {{ (old('size') == $value->size_mm ? "selected":"") }}>
+                		{{ $value->size_mm }}
+              			</option>
+     					@endforeach
+    			</select>
 					@error('size')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
 					</span>
 					@enderror
-				</div>        	
+				</div>      	
 			</div>
+
+
+			
+			<div class="form-group row">
+				<label class="col-form-label col-4">Batch</label>
+				<div class="col-8">
+				<select class="form-control @error('batch') is-invalid @enderror" name="batch">
+              		<option value="">Select Batch</option>
+    					@foreach ($data6 as $value)
+             			<option value="{{ $value->batch }}" {{ (old('batch') == $value->batch ? "selected":"") }}>
+                		{{ $value->batch }}
+              			</option>
+     					@endforeach
+    			</select>
+					@error('batch')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
+				</div>      	
+			</div>
+
 			
 			<div class="form-group row">
 				<label class="col-form-label col-4">QTY(kgs)</label>
@@ -143,6 +155,7 @@
 						<th>size</th>
 						<th>quantity</th>
 						<th>Product</th>
+						<th>batch</th>
 
 					</tr>
 				</thead>
@@ -155,6 +168,7 @@
 						<td class="size">{{ $value->size }}</td>
 						<td class="quantity">{{ $value->quantity }}</td>
 						<td class="product">{{ $value->productid }}</td>
+						<td class="product">{{ $value->batch }}</td>
 
 						
 					</tr>

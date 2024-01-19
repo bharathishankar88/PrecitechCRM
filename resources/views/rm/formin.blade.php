@@ -78,12 +78,32 @@
 				</div>      	
 			</div>
 
-			
 			<div class="form-group row">
 				<label class="col-form-label col-4">Size</label>
 				<div class="col-8">
-					<input type="text" class="form-control @error('sizemm') is-invalid @enderror" name="sizemm" value="{{ old('sizemm') }}" placeholder="Enter Size">
+				<select class="form-control @error('sizemm') is-invalid @enderror" name="sizemm">
+              		<option value="">Select Size</option>
+    					@foreach ($data5 as $value)
+             			<option value="{{ $value->size_mm }}" {{ (old('sizemm') == $value->size_mm ? "selected":"") }}>
+                		{{ $value->size_mm }}
+              			</option>
+     					@endforeach
+    			</select>
 					@error('sizemm')
+					<span class="invalid-feedback" role="alert">
+						<strong>{{ $message }}</strong>
+					</span>
+					@enderror
+				</div>      	
+			</div>
+
+
+			
+			<div class="form-group row">
+				<label class="col-form-label col-4">Batch</label>
+				<div class="col-8">
+					<input type="text" class="form-control @error('batch') is-invalid @enderror" name="batch" value="{{ old('batch') }}" placeholder="Enter Batch">
+					@error('batch')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
 					</span>
@@ -125,6 +145,7 @@
 						<th>Supplier</th>
 						<th>grade</th>
 						<th>size</th>
+						<th>batch</th>
 						<th>quantity</th>
 						<th>Modify</th>
 
@@ -137,6 +158,7 @@
 						<td class="supplier">{{ $value->supplierid }}</td>
 						<td class="grade">{{ $value->gradeid }}</td>
 						<td class="size">{{ $value->size }}</td>
+						<td class="size">{{ $value->batch }}</td>
 						<td class="quantity">{{ $value->quantity }}</td>
 						<td class=" text-center">
 							<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">

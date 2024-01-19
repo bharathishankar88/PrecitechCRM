@@ -70,6 +70,7 @@
 				<thead>
 					
 					<tr>
+						<th>batch</th>
 						<th>size</th>
 						<th>Overallstock</th>
 						<th>Utilisedstock</th>
@@ -80,6 +81,7 @@
 				<tbody>
 					@foreach($data as $value)
 					<tr>
+					<td class="timerange">{{ $value->batch }}</td>
 						<td class="timerange">{{ $value->size }}</td>
 						<td class="name">{{ $value->qty1 }}</td>
 						<td class="operator">{{ $value->qty }}</td>

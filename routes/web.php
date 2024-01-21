@@ -53,6 +53,9 @@ Route::get('rm/formout',[App\Http\Controllers\RMController::class,'viewDataOut']
 Route::post('rm/dataoutsave',[App\Http\Controllers\RMController::class,'viewDataOutSave'])->name('rm/dataoutsave');
 Route::get('rm/report',[App\Http\Controllers\RMController::class,'viewDataReport'])->name('rm/report');
 Route::post('rm/reportsave',[App\Http\Controllers\RMController::class,'viewDataReportSave'])->name('rm/reportsave');
+Route::get('rm/downloadpdf{id}',[App\Http\Controllers\RMController::class,'downloadPdf']);
+Route::get('rm/dataindelete{id}',[App\Http\Controllers\RMController::class,'datainDelete']);
+Route::get('rm/dataoutdelete{id}',[App\Http\Controllers\RMController::class,'dataoutDelete']);
 
 //settings
 Route::get('form/addoperator',[App\Http\Controllers\SettingController::class,'viewOperator'])->name('form/addoperator');

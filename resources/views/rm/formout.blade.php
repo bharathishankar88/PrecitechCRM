@@ -29,7 +29,7 @@
 			<div class="form-group row">
 			<label class="col-form-label col-4">Data Entry For</label>
 				<div class="col-8">
-				<input type="date" class="form-control input-sm" id="todate" name="todate" required>
+				<input type="date" class="form-control input-sm" id="todate" name="todate" value="<?php echo date('Y-m-d'); ?>" max="<?php echo date("Y-m-d"); ?>" required>
 				@error('todate')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
@@ -156,6 +156,7 @@
 						<th>quantity</th>
 						<th>Product</th>
 						<th>batch</th>
+						<th>Modify</th>
 
 					</tr>
 				</thead>
@@ -169,7 +170,11 @@
 						<td class="quantity">{{ $value->quantity }}</td>
 						<td class="product">{{ $value->productid }}</td>
 						<td class="product">{{ $value->batch }}</td>
-
+						<td class=" text-center">
+						<a href="{{ url('rm/dataoutdelete'.$value->id) }}" onclick="return confirm('Are you sure to want to download it?')">
+								<i class="fa fa-trash" style="color: red;"></i>
+						</a>
+						</td>
 						
 					</tr>
 					@endforeach

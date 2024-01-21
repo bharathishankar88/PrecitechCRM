@@ -8,7 +8,7 @@
 	<br>
 	<br>
 	<div class="signup-form">
-		<form action="{{ route('rm/datainsave') }}" method="post" class="form-horizontal">
+		<form action="{{ route('rm/datainsave') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			
 			{{-- success --}}
@@ -29,7 +29,7 @@
 			<div class="form-group row">
 			<label class="col-form-label col-4">Data Entry For</label>
 				<div class="col-8">
-				<input type="date" class="form-control input-sm" id="todate" name="todate" required>
+				<input type="date" class="form-control input-sm" id="todate" name="todate" value="<?php echo date('Y-m-d'); ?>" max="<?php echo date("Y-m-d"); ?>" required>
 				@error('todate')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
@@ -124,7 +124,17 @@
 			</div>
 
 			
-			
+			<div class="form-group row">
+				<label class="col-form-label col-4">Certificate(.pdf)</label>
+				<div class="col-8">
+					<input type="file" class="form-control @error('cert') is-invalid @enderror" name="cert" value="{{ old('cert') }}" placeholder="uploadcert">
+					@error('cert')
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $message }}</strong>
+						</span>
+					@enderror  
+				</div>      	
+			</div>
 
 
 			<div class="form-group row">
@@ -161,10 +171,16 @@
 						<td class="size">{{ $value->batch }}</td>
 						<td class="quantity">{{ $value->quantity }}</td>
 						<td class=" text-center">
-							<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
+							<!--<a class="m-r-15 text-muted update" data-toggle="modal" data-id="'.$value->id.'" data-target="#update">
 								<i class="fa fa-edit" style="color: #2196f3"></i>
+							</a>-->
+							@if($value->attachment!=null)
+							<a href="{{ url('rm/downloadpdf'.$value->id) }}" onclick="return confirm('Are you sure to want to download it?')">
+								<i class="fa fa-download" style="color: red;"></i>
 							</a>
-							<a href="{{ url('form/deleteProduction'.$value->id) }}" onclick="return confirm('Are you sure to want to delete it?')">
+							@endif
+
+							<a href="{{ url('rm/dataindelete'.$value->id) }}" onclick="return confirm('Are you sure to want to delete it?')">
 								<i class="fa fa-trash" style="color: red;"></i>
 							</a>
 						</td>

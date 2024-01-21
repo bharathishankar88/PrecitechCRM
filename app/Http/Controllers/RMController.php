@@ -25,7 +25,7 @@ class RMController extends Controller
         $data1 = DB::select("SELECT * FROM suppliers");
         $data2 = DB::select("SELECT * FROM grades");
         $data3 = DB::select("SELECT * FROM products");
-        $data4 = DB::select("SELECT A.id,B.name as supplierid,C.name as gradeid,size,quantity,batch  FROM rmins A,suppliers B,grades C where A.supplierid=B.id and A.gradeid=C.id");
+        $data4 = DB::select("SELECT A.id,B.name as supplierid,C.name as gradeid,size,quantity,batch,attachment  FROM rmins A,suppliers B,grades C where A.supplierid=B.id and A.gradeid=C.id");
         $data5 = DB::select("SELECT * FROM sizes");
 
         return view('rm.formin',compact('data','data1','data2','data3','data4','data5'));
@@ -41,6 +41,7 @@ class RMController extends Controller
             'sizemm' =>'required',
             'qty' =>'required',
             'batch'=>'required|unique:rmins',
+            'attachment' => 'nullable|mimes:pdf,zip',
         ]);
     
         try{
@@ -51,6 +52,14 @@ class RMController extends Controller
             $quantity = $request->qty;
             $createdBy = Auth::user()->id;
             $batch = $request->batch;
+            $cert = $request->cert;
+
+            if($request->hasFile('cert')){
+                $path = $request->cert->getRealPath();
+                $logo = file_get_contents($path);
+                $cert = base64_encode($logo);
+                //$request->image->storeAs('images',$filename,'public');
+            }
 
             $idindex = DB::select("select max(id)+1 as id from rmins");
             $id=0;
@@ -69,7 +78,7 @@ class RMController extends Controller
 
              
        //DB::insert('insert into rmins (name,id) values (?,?)', [$name,$id]); 
-       DB::insert('INSERT INTO rmins (id,supplierid,gradeid,size,quantity,batch,created_by,modified_by) VALUES (?,?,?,?,?,?,?,?)', [$id,$supplierid,$gradeid,$sizemm,$quantity,$batch,$createdBy,$createdBy]);
+       DB::insert('INSERT INTO rmins (id,supplierid,gradeid,size,quantity,batch,attachment,created_by,modified_by) VALUES (?,?,?,?,?,?,?,?,?)', [$id,$supplierid,$gradeid,$sizemm,$quantity,$batch,$cert,$createdBy,$createdBy]);
     
           
 
@@ -291,5 +300,35 @@ class RMController extends Controller
              ->get();
          return view('form.form',compact('data'));
      }
+
+    public function downloadPdf($id)
+    {
+    // Retrieve the Blob data from the database
+    //$document = Document::findOrFail($id);
+    $document = DB::select("SELECT attachment FROM rmins where id='".$id."'");
+    
+    $file_contents = base64_decode($document[0]->attachment);
+
+    return response($file_contents)
+        ->header('Cache-Control', 'no-cache private')
+        ->header('Content-Description', 'File Transfer')
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-length', strlen($file_contents))
+        ->header('Content-Disposition', 'attachment; filename=certificate_file.pdf')
+        ->header('Content-Transfer-Encoding', 'binary');
+}
+public function datainDelete($id)
+    {
+        $delete = Rmins::find($id);
+        $delete->delete();
+        return redirect()->back()->with('insert','Data has been deleted successfully!.');
+    }
+
+    public function dataoutDelete($id)
+    {
+        $delete = Rmouts::find($id);
+        $delete->delete();
+        return redirect()->back()->with('insert','Data has been deleted successfully!.');
+    }
     
 }

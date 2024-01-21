@@ -11,6 +11,9 @@ use App\Models\Operator;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Roles;
+use App\Models\Supplier;
+use App\Models\Sizes;
+use App\Models\Grades;
 
 use Hash;
 use Auth;

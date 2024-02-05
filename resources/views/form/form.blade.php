@@ -43,14 +43,14 @@
 			<div class="form-group row">
 				<label class="col-form-label col-4">Machine Name</label>
 				<div class="col-8">
-				<select class="form-control @error('machine') is-invalid @enderror" name="machine">
-              		<option value="">Select Machine</option>
+				<input type="text" class="form-control @error('machine') is-invalid @enderror" name="machine" value="{{ old('machine') }}" placeholder="Enter Machine Name" list="machines" autocomplete="off" required>
+				<datalist id="machines">
+              		<!--<option data-value="">Select Machine</option>-->
     					@foreach ($data1 as $value)
-             			<option value="{{ $value->id }}" {{ (old('machine') == $value->id ? "selected":"") }}>
-                		{{ $value->name }}
-              			</option>
+             			<option value="{{ $value->name }}" {{ (old('machine') == $value->id ? "selected":"") }}>
+                		
      					@endforeach
-    			</select>
+				</datalist>
 				@error('machine')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
@@ -64,14 +64,14 @@
 			<div class="form-group row">
 				<label class="col-form-label col-4">Operator</label>
 				<div class="col-8">
-				<select class="form-control @error('operator') is-invalid @enderror" name="operator">
-              		<option value="">Select Operator</option>
+				<input type="text" class="form-control @error('operator') is-invalid @enderror" name="operator" value="{{ old('operator') }}" placeholder="Enter operator Name" list="operators" autocomplete="off" required>
+				<datalist id="operators">
+              		<!--<option value="">Select Operator</option>-->
     					@foreach ($data2 as $value)
-             			<option value="{{ $value->id }}" {{ (old('operator') == $value->id ? "selected":"") }}>
-                		{{ $value->name }}
-              			</option>
+             			<option value="{{ $value->name }}" {{ (old('operator') == $value->id ? "selected":"") }}>
+                		
      					@endforeach
-    			</select>
+				</datalist>
 					@error('operator')
 					<span class="invalid-feedback" role="alert">
 						<strong>{{ $message }}</strong>
@@ -83,12 +83,12 @@
 			<div class="form-group row">
 				<label class="col-form-label col-4">Product</label>
 				<div class="col-8">
-				<select class="form-control @error('product') is-invalid @enderror" name="product">
-              		<option value="">Select Product</option>
+				<input type="text" class="form-control @error('product') is-invalid @enderror" name="product" value="{{ old('product') }}" placeholder="Enter product Name" list="products" autocomplete="off" required>
+				<datalist id="products">
+              		<!--<option value="">Select Product</option>-->
     					@foreach ($data3 as $value)
-             			<option value="{{ $value->id }}" {{ (old('product') == $value->id ? "selected":"") }} >
-                		{{ $value->name }}
-              			</option>
+             			<option value="{{ $value->name }}" {{ (old('product') == $value->id ? "selected":"") }} >
+                		
      					@endforeach
     			</select>
 					@error('product')

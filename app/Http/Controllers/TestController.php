@@ -108,6 +108,37 @@ class TestController extends Controller
             $timeslot1 = $request->timeslot1;
             $timeslot2 = $request->timeslot2;
             $i = 0;
+
+            $machine = DB::select("SELECT * FROM machines where name= '$machine'");
+            if($machine != null){
+                foreach($machine as $value){
+                $machine = $value->id;
+                
+                }
+            }else{
+                return redirect()->back()->with('error','Invalid Machine!.');
+            }
+
+            $product = DB::select("SELECT * FROM products where name= '$product'");
+            if($product != null){
+                foreach($product as $value){
+                $product = $value->id;
+                
+                }
+            }else{
+                return redirect()->back()->with('error','Invalid Product!.');
+            }
+
+            $operator = DB::select("SELECT * FROM operators where name= '$operator'");
+            if($operator != null){
+                foreach($operator as $value){
+                $operator = $value->id;
+                
+                }
+            }else{
+                return redirect()->back()->with('error','Invalid Operator Name!.');
+            }
+
             foreach($itemProduced as $productCount){
             
             $t1 = strtotime($timeslot1[$i]);
